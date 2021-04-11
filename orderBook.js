@@ -1,6 +1,16 @@
 const reconcileOrder = (existingBook, incomingOrder) => {
-  // if the order book is empty or only has orders of one type in it, add incoming order to the back
+  let result = []
+
+  // checks if the order book is empty or only has orders of one type in it, adds incoming order to the back
   // of the order book
+  if (existingBook.length > 0) {
+    result = 'test'
+  } else {
+    result.push(incomingOrder)
+  }
+
+  return result
+
 
   // if the order book does not have any matching price to the incoming buy or sell order, add the incoming 
   // order to the back of the order book
