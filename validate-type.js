@@ -1,8 +1,8 @@
-const validateType = (existingBook, incomingOrder) => {
+const validateType = (book, order) => {
   let deal = true
 
-  for (let i = 0; i < existingBook.length; i++) {
-    if (existingBook[i].type === incomingOrder.type) {
+  for (let i = 0; i < book.length; i++) {
+    if (book[i].type === order.type) {
       deal = false
     }
   }

@@ -1,24 +1,24 @@
 const validateType = require('./validate-type')
 
-const reconcileOrder = (existingBook, incomingOrder) => {
-  let book = []
-  let concatBook = existingBook.concat(incomingOrder)
+const reconcileOrder = (book, order) => {
+  let newBook = []
+  let concatBook = book.concat(order)
 
-  if (existingBook.length === 0 ||
-    validateType(existingBook, incomingOrder) === false ||
-    validateMatch(existingBook, incomingOrder) === false) {
-    book = concatBook
+  if (book.length === 0 ||
+    validateType(book, order) === false ||
+    validateMatch(book, order) === false) {
+    newBook = concatBook
   }
 
-  return book
+  return newBook
 }
 
 
-const validateMatch = (existingBook, incomingOrder) => {
+const validateMatch = (book, order) => {
   let match = true
 
-  for (let i = 0; i < existingBook.length; i++) {
-    if ((existingBook[i].type !== incomingOrder.type) && (existingBook[i].price !== incomingOrder.type)) {
+  for (let i = 0; i < book.length; i++) {
+    if ((book[i].type !== order.type) && (book[i].price !== order.type)) {
       match = false
     }
   }
