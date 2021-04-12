@@ -1,11 +1,11 @@
-const validateType = require('./validate-type')
+const hasDiffType = require('./has-different-type')
 
 const reconcileOrder = (book, order) => {
   let newBook = []
   let concatBook = book.concat(order)
 
   if (book.length === 0 ||
-    validateType(book, order) === false ||
+    hasDiffType(book, order) === false ||
     validateMatch(book, order) === false) {
     newBook = concatBook
   }
