@@ -7,11 +7,23 @@ const reconcileOrder = (existingBook, incomingOrder) => {
     book.push(incomingOrder)
   } else if (validateType(existingBook, incomingOrder) === false) {
     book = existingBook.concat(incomingOrder)
-  } else {
-    validateMatch(existingBook, incomingOrder)
+  } else if (validateMatch(existingBook, incomingOrder) === true) {
+    book = existingBook.concat(incomingOrder)
+  }
+  return book
+}
+
+
+validateMatch = (existingBook, incomingOrder) => {
+  let match = false
+
+  for (let i = 0; i < existingBook.length; i++) {
+    if ((existingBook[i].type !== incomingOrder.type) && (existingBook[i].price !== incomingOrder.type)) {
+      match = true
+    }
   }
 
-  return book
+  return match
 }
 
 module.exports = reconcileOrder
