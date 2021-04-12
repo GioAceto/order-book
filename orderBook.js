@@ -6,7 +6,7 @@ const reconcileOrder = (book, order) => {
 
   if (book.length === 0 ||
     hasDiffType(book, order) === false ||
-    validateMatch(book, order) === false) {
+    hasSamePrice(book, order) === false) {
     newBook = concatBook
   }
 
@@ -14,7 +14,7 @@ const reconcileOrder = (book, order) => {
 }
 
 
-const validateMatch = (book, order) => {
+const hasSamePrice = (book, order) => {
   let match = true
 
   for (let i = 0; i < book.length; i++) {
