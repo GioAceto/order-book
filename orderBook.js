@@ -4,14 +4,10 @@ const reconcileOrder = (existingBook, incomingOrder) => {
   let book = []
   let concatBook = existingBook.concat(incomingOrder)
 
-  if (existingBook.length === 0) {
+  if (existingBook.length === 0 ||
+    validateType(existingBook, incomingOrder) === false ||
+    validateMatch(existingBook, incomingOrder) === false) {
     book = concatBook
-  } else if (validateType(existingBook, incomingOrder) === false) {
-    book = concatBook
-  } else if (validateMatch(existingBook, incomingOrder) === false) {
-    book = concatBook
-  } else if (validateMatch(existingBook, incomingOrder) === true) {
-    validateMatch(existingBook, incomingOrder)
   }
 
   return book
@@ -24,9 +20,6 @@ const validateMatch = (existingBook, incomingOrder) => {
   for (let i = 0; i < existingBook.length; i++) {
     if ((existingBook[i].type !== incomingOrder.type) && (existingBook[i].price !== incomingOrder.type)) {
       match = false
-    } else if ((existingBook[i].type !== incomingOrder.type) && (existingBook[i].price === incomingOrder.type)) {
-      existingBook.pop(existingBook[i])
-      match = true
     }
   }
 
