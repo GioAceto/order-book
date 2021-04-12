@@ -1,29 +1,18 @@
+const validateType = require('./validate-type')
+
 const reconcileOrder = (existingBook, incomingOrder) => {
   let book = []
 
   if (existingBook.length === 0) {
     book.push(incomingOrder)
+  } else if (validateType(existingBook, incomingOrder) === false) {
+    book = existingBook.concat(incomingOrder)
   } else {
-    if (validateType(existingBook, incomingOrder) === false) {
-      book = existingBook.concat(incomingOrder)
-    }
+    validateMatch(existingBook, incomingOrder)
   }
 
   return book
 }
-
-const validateType = (existingBook, incomingOrder) => {
-  let deal = true
-
-  for (let i = 0; i < existingBook.length; i++) {
-    if (existingBook[i].type === incomingOrder.type) {
-      deal = false
-    }
-  }
-
-  return deal
-}
-
 
 module.exports = reconcileOrder
 
