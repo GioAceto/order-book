@@ -4,7 +4,7 @@ const reconcileOrder = (existingBook, incomingOrder) => {
   let book = []
 
   if (existingBook.length === 0) {
-    book.push(incomingOrder)
+    book = existingBook.concat(incomingOrder)
   } else if (validateType(existingBook, incomingOrder) === false) {
     book = existingBook.concat(incomingOrder)
   } else if (validateMatch(existingBook, incomingOrder) === true) {
