@@ -17,17 +17,17 @@ const reconcileOrder = (book, order) => {
     let orderPrice = order.price
     let bookQty = book[i].quantity
     let orderQty = order.quantity
-    let deal = false
 
-    if (bookType !== orderType && bookPrice === orderPrice) {
+    if (bookType !== orderType && bookPrice === orderPrice && bookQty === orderQty) {
       book.splice(book[i], 1)
+    } else if (bookType !== orderType && bookPrice === orderPrice && bookQty > orderQty) {
+      book[i].quantity -= order.quantity
+      book.push(book.shift(book[i]))
     }
   }
 
-
   return book
 }
-
 
 const checksAllType = (book, order) => {
   let deal = false
