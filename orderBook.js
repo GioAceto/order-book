@@ -1,30 +1,81 @@
-const hasDiffType = require('./has-different-type')
+// const hasDiffType = require('./has-different-type')
 
 const reconcileOrder = (book, order) => {
-  let newBook = []
-  let concatBook = book.concat(order)
 
-  if (book.length === 0 ||
-    hasDiffType(book, order) === false ||
-    hasSamePrice(book, order) === false) {
-    newBook = concatBook
+  if (book === []) {
+    book.push(order)
   }
 
-  return newBook
+  if (checksAllType(book, order) === false) {
+    book.push(order)
+  }
+
+
+
+
+  return book
 }
 
 
-const hasSamePrice = (book, order) => {
-  let match = true
+const checksAllType = (book, order) => {
+  let deal = false
+  let count = 0
 
   for (let i = 0; i < book.length; i++) {
-    if ((book[i].type !== order.type) && (book[i].price !== order.type)) {
-      match = false
+    if (book[i].type !== order.type) {
+      count++
+    }
+    if (count > 0) {
+      deal = true
     }
   }
 
-  return match
+  return deal
 }
+
+// const checksType = (book, order) => {
+//   let deal = false
+
+//   for (let i = 0; i < book.length; i++) {
+//     if (book[i].type === order.type) {
+//       deal === true
+//     }
+//   }
+
+//   return deal
+// }
+
+
+
+// const checksPrice = (book, order) => {
+//   let deal = false
+
+//   for (let i = 0; i < book.length; i++) {
+//     if (book[i].price === order.price) {
+//       deal = true
+//     }
+//   }
+
+//   return deal
+// }
+
+
+
+
+
+
+
+// const hasSamePrice = (book, order) => {
+//   let match = true
+
+//   for (let i = 0; i < book.length; i++) {
+//     if ((book[i].type !== order.type) && (book[i].price !== order.type)) {
+//       match = false
+//     }
+//   }
+
+//   return match
+// }
 
 module.exports = reconcileOrder
 

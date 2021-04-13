@@ -1,4 +1,4 @@
-const validateType = (book, order) => {
+const hasDiffType = (book, order) => {
   let deal = true
 
   for (let i = 0; i < book.length; i++) {
@@ -10,4 +10,4 @@ const validateType = (book, order) => {
   return deal
 }
 
-module.exports = validateType
+module.exports = hasDiffType
