@@ -10,7 +10,19 @@ const reconcileOrder = (book, order) => {
     book.push(order)
   }
 
+  for (let i = 0; i < book.length; i++) {
+    let bookType = book[i].type
+    let bookPrice = book[i].price
+    let orderType = order.type
+    let orderPrice = order.price
+    let bookQty = book[i].quantity
+    let orderQty = order.quantity
+    let deal = false
 
+    if (bookType !== orderType && bookPrice === orderPrice) {
+      book.splice(book[i], 1)
+    }
+  }
 
 
   return book
