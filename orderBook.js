@@ -1,32 +1,38 @@
 // const hasDiffType = require('./has-different-type')
 
 const reconcileOrder = (book, order) => {
+  let empty = []
 
-  if (book === []) {
-    book.push(order)
-  }
-
-  if (checksAllType(book, order) === false) {
-    book.push(order)
-  }
-
-  for (let i = 0; i < book.length; i++) {
-    let bookType = book[i].type
-    let bookPrice = book[i].price
-    let orderType = order.type
-    let orderPrice = order.price
-    let bookQty = book[i].quantity
-    let orderQty = order.quantity
-
-    if (bookType !== orderType && bookPrice === orderPrice && bookQty === orderQty) {
-      book.splice(book[i], 1)
-    } else if (bookType !== orderType && bookPrice === orderPrice && bookQty > orderQty) {
-      book[i].quantity -= order.quantity
-      book.push(book.shift(book[i]))
+  if (book.length === 0) {
+    empty.push(order)
+  } else if (book.length > 0) {
+    empty = book
+    if (checksAllType(book, order) === false) {
+      empty.push(order)
+    } else if (checksAllPrice(book, order) === false) {
+      empty.push(order)
+    } else {
+      for (let i = 0; i < book.length; i++) {
+        // fulfills perfect deal
+        if (book[i].type !== order.type && book[i].price === order.price && book[i].quantity === order.quantity) {
+          empty.shift(book[i])
+        }
+        // fulfills deal of corresponding type and price, with a lower order quantity than the existing book order
+        if ((book[i].type !== order.type) && (book[i].price === order.price) && (book[i].quantity > order.quantity)) {
+          book[i].quantity -= order.quantity
+          empty.push(empty.shift(book[i]))
+        }
+        // fulfills deal of corresponding type and price, with a greater order quantity than the existing book order
+        if ((book[i].type !== order.type) && (book[i].price === order.price) && (book[i].quantity < order.quantity)) {
+          order.quantity = (book[i].quantity -= order.quantity) * -1
+          book.push(order)
+          book.shift(book[i])
+        }
+      }
     }
   }
 
-  return book
+  return empty
 }
 
 const checksAllType = (book, order) => {
@@ -45,49 +51,22 @@ const checksAllType = (book, order) => {
   return deal
 }
 
-// const checksType = (book, order) => {
-//   let deal = false
+const checksAllPrice = (book, order) => {
+  let deal = false
+  let count = 0
 
-//   for (let i = 0; i < book.length; i++) {
-//     if (book[i].type === order.type) {
-//       deal === true
-//     }
-//   }
+  for (let i = 0; i < book.length; i++) {
+    if ((book[i].type !== order.type) && (book[i].price === order.price)) {
+      count++
+    }
+    if (count > 0) {
+      deal = true
+    }
+  }
 
-//   return deal
-// }
+  return deal
+}
 
-
-
-// const checksPrice = (book, order) => {
-//   let deal = false
-
-//   for (let i = 0; i < book.length; i++) {
-//     if (book[i].price === order.price) {
-//       deal = true
-//     }
-//   }
-
-//   return deal
-// }
-
-
-
-
-
-
-
-// const hasSamePrice = (book, order) => {
-//   let match = true
-
-//   for (let i = 0; i < book.length; i++) {
-//     if ((book[i].type !== order.type) && (book[i].price !== order.type)) {
-//       match = false
-//     }
-//   }
-
-//   return match
-// }
 
 module.exports = reconcileOrder
 
