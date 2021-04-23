@@ -1,5 +1,5 @@
 const reconcileOrder = (existingBook, incomingOrder) => {
-  const empty = []
+  const newBook = []
 
   for (let i = existingBook.length - 1; i >= 0; i--) {
     if (incomingOrder.type !== existingBook[i].type && incomingOrder.price === existingBook[i].price && incomingOrder.quantity === existingBook[i].quantity) {
@@ -19,15 +19,15 @@ const reconcileOrder = (existingBook, incomingOrder) => {
     }
   }
   if (existingBook.length !== 0 && incomingOrder === 0) {
-    empty.push(...existingBook)
+    newBook.push(...existingBook)
   } else if (existingBook.length === 0 && incomingOrder !== 0) {
-    empty.push(incomingOrder)
+    newBook.push(incomingOrder)
   } else if (existingBook.length !== 0 && incomingOrder !== 0) {
-    empty.push(...existingBook)
-    empty.push(incomingOrder)
+    newBook.push(...existingBook)
+    newBook.push(incomingOrder)
   }
 
-  return empty
+  return newBook
 }
 
 module.exports = reconcileOrder
